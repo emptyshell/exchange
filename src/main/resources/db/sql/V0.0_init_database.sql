@@ -59,7 +59,7 @@ create table employee
     emp_id           bigserial    not null
         constraint employee_ac_id_pk
             primary key,
-    br_id            bigint       not null
+    br_id            bigint
         constraint employee_br_id_br_id_fk
             references branch (br_id),
     emp_first_name   varchar(30),
@@ -86,6 +86,6 @@ create table exchange_history
     emp_id        bigint    not null
         constraint exchange_history_emp_id_fk
             references employee (emp_id),
-    timestamp timestamp not null
+    timestamp     timestamp not null
 
 )

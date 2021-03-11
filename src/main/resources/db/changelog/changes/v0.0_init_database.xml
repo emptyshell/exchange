@@ -124,7 +124,7 @@
             </column>
             <column name="br_id" type="bigint">
                 <constraints
-                        nullable="false"
+                        nullable="true"
                         foreignKeyName="employee_br_id_br_id_fk"
                         referencedColumnNames="br_id"
                         referencedTableName="branch"

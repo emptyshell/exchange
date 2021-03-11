@@ -1,5 +1,6 @@
 package men.suruceanu.exchange.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "repositories")
+@EnableJpaRepositories(basePackages = "men.suruceanu.exchange.repositories")
 public class EntityManagerConfiguration {
 
     @Autowired
