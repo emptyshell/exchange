@@ -1,0 +1,190 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="includeAll" id="raw" objectQuotingStrategy="LEGACY">
+        <sqlFile path="db/sql/V0.0_init_database.sql" dbms="postgresql" />
+
+<!--        liquibase format-->
+        <!--<createTable tableName="currency">
+            <column name="cur_id" type="bigserial">
+                <constraints
+                        primaryKeyName="cur_id_pk"
+                        primaryKey="true"
+                        nullable="false" />
+            </column>
+            <column name="name" type="varchar(10)">
+                <constraints nullable="false" />
+            </column>
+            <column name="full_name" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="branch">
+            <column name="br_id" type="bigserial">
+                <constraints
+                        primaryKeyName="br_id_pk"
+                        primaryKey="true"
+                        nullable="false" />
+            </column>
+            <column name="br_address" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="br_city" type="varchar(30)">
+                <constraints nullable="false" />
+            </column>
+            <column name="br_country" type="varchar(30)">
+                <constraints nullable="false" />
+            </column>
+            <column name="br_zip" type="varchar(15)">
+                <constraints nullable="false" />
+            </column>
+            <column name="br_local_currency" type="bigint">
+                <constraints
+                        nullable="false"
+                        referencedTableName="currency"
+                        referencedColumnNames="cur_id"
+                        foreignKeyName="br_local_currency_fk"
+                />
+            </column>
+        </createTable>
+
+        <createTable tableName="exchange">
+            <column name="exchange_id" type="bigserial">
+                <constraints
+                        primaryKeyName="exchange_cur_id_pk"
+                        primaryKey="true"
+                        nullable="false" />
+            </column>
+            <column name="currency" type="bigint">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="exchange_currency_fk"
+                        referencedColumnNames="cur_id"
+                        referencedTableName="currency"
+                />
+            </column>
+            <column name="br_id" type="bigint">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="exchange_br_id_br_id_fk"
+                        referencedColumnNames="br_id"
+                        referencedTableName="branch"
+                />
+            </column>
+            <column name="buy_price" type="real">
+                <constraints nullable="false" />
+            </column>
+            <column name="sell_price" type="real">
+                <constraints nullable="false" />
+            </column>
+            <column name="timestamp" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="account">
+            <column name="ac_id" type="bigserial">
+                <constraints
+                        primaryKeyName="account_ac_id_pk"
+                        primaryKey="true"
+                        nullable="false" />
+            </column>
+            <column name="cur_id" type="bigint">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="account_cur_id_fk"
+                        referencedColumnNames="cur_id"
+                        referencedTableName="currency"
+                />
+            </column>
+            <column name="br_id" type="bigint">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="account_br_id_br_id_fk"
+                        referencedColumnNames="br_id"
+                        referencedTableName="branch"
+                />
+            </column>
+            <column name="ac_amount" type="real">
+                <constraints nullable="false" />
+            </column>
+            <column name="timestamp" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <sql>create type access_level as enum ('operator', 'administrator')</sql>
+
+        <createTable tableName="employee">
+            <column name="emp_id" type="bigserial">
+                <constraints
+                        primaryKeyName="employee_ac_id_pk"
+                        primaryKey="true"
+                        nullable="false" />
+            </column>
+            <column name="br_id" type="bigint">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="employee_br_id_br_id_fk"
+                        referencedColumnNames="br_id"
+                        referencedTableName="branch"
+                />
+            </column>
+            <column name="emp_first_name" type="varchar(30)" />
+            <column name="emp_last_name" type="varchar(30)" />
+            <column name="emp_birthday" type="date" />
+            <column name="emp_access_level" type="access_level">
+                <constraints nullable="false" />
+            </column>
+            <column name="emp_login" type="varchar(30)">
+                <constraints nullable="false" />
+            </column>
+            <column name="emp_password" type="varchar(60)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="exchange_history">
+            <column name="ex_history_id" type="bigserial">
+                <constraints
+                        primaryKeyName="exchange_history_ac_id_pk"
+                        primaryKey="true"
+                        nullable="false" />
+            </column>
+            <column name="buy_amount" type="real">
+                <constraints nullable="false" />
+            </column>
+            <column name="sell_amount" type="real">
+                <constraints nullable="false" />
+            </column>
+            <column name="exchange_id" type="bigint">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="exchange_history_exchange_id_fk"
+                        referencedColumnNames="exchange_id"
+                        referencedTableName="exchange"
+                />
+            </column>
+            <column name="br_id" type="bigint">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="exchange_history_br_id_br_id_fk"
+                        referencedColumnNames="br_id"
+                        referencedTableName="branch"
+                />
+            </column>
+            <column name="emp_id" type="bigint">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="exchange_history_emp_id_fk"
+                        referencedColumnNames="emp_id"
+                        referencedTableName="employee"
+                />
+            </column>
+            <column name="timestamp" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+        </createTable>-->
+
+    </changeSet>
+</databaseChangeLog>
