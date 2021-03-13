@@ -1,2 +1,2 @@
-# exchange
-exchange system
+# Currency exchange
+Currency exchange system example
