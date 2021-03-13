@@ -7,10 +7,13 @@ import men.suruceanu.exchange.dto.exception.RegisterEmployeeException;
 import men.suruceanu.exchange.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +37,7 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping("/login")
+    @PostMapping(value = "/login")
     public void authenticateUser(@Valid @RequestBody LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -42,10 +45,11 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
-        response.addHeader(HttpHeaders.AUTHORIZATION, jwt);
+        response.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + jwt);
     }
 
-    @PostMapping("/register")
+    @PostMapping("/addEmployee")
+    @PreAuthorize("hasRole('ADMIN')")
     public void registerUser(@Valid @RequestBody Employee signUpRequest) throws RegisterEmployeeException {
         if (employeeRepository.existsByEmployeeLogin(signUpRequest.getEmployeeLogin())) {
             throw new RegisterEmployeeException("Error: Employee login is already taken!");

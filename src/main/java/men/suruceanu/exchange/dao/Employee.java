@@ -10,24 +10,25 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "branch")
+@Table(name = "employee")
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
 @TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
-public class Employee {
+public class Employee implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "emp_id")
     private Long employeeId;
 
-    @OneToMany(mappedBy = "branchId",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "branchId", cascade = CascadeType.REFRESH, targetEntity = Branch.class)
     private List<Branch> branchId;
 
     @Column(name = "emp_first_name")
@@ -36,7 +37,7 @@ public class Employee {
     @Column(name = "emp_last_name")
     private String employeeLastName;
 
-    @Column(name = "emp_birthday")
+    @Column(name = "emp_birthday", columnDefinition = "DATE")
     private LocalDateTime employeeBirthday;
 
     @Enumerated(EnumType.STRING)

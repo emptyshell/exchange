@@ -1,11 +1,17 @@
 create table currency
 (
     full_name varchar(50) not null,
-    name      varchar(10) not null,
-    cur_id    bigserial   not null
+    name varchar(10) not null,
+    cur_id bigserial not null
         constraint cur_id_pk
             primary key
 );
+
+create unique index currency_full_name_uindex
+    on currency (full_name);
+
+create unique index currency_name_uindex
+    on currency (name);
 
 create table branch
 (
@@ -52,7 +58,7 @@ create table account
     timestamp timestamp not null
 );
 
-create type access_level as enum ('operator', 'administrator');
+create type access_level as enum ('USER', 'MODERATOR', 'ADMIN');
 
 create table employee
 (

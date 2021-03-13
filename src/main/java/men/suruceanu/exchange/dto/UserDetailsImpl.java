@@ -36,7 +36,7 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public static UserDetailsImpl build(Employee employee) {
-        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(employee.getEmployeeAccessLevel().name()));
+        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + employee.getEmployeeAccessLevel().name()));
 
         return new UserDetailsImpl(
                 String.valueOf(employee.getEmployeeId()),

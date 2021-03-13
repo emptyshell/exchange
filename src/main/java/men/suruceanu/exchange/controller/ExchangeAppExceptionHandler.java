@@ -12,36 +12,44 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.nio.file.AccessDeniedException;
 import java.util.NoSuchElementException;
 
 @ControllerAdvice
-public class ExceptionHandler extends ResponseEntityExceptionHandler {
+public class ExchangeAppExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExchangeAppExceptionHandler.class);
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(NoSuchElementException.class)
+    @ExceptionHandler(NoSuchElementException.class)
     protected ResponseEntity<Object> handleApiException(NoSuchElementException ex, WebRequest request) {
         logger.error("request {} failed execution with the following exception", request, ex);
         return handleExceptionInternal(ex, null, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(IllegalArgumentException.class)
+    @ExceptionHandler(IllegalArgumentException.class)
     protected ResponseEntity<Object> handleApiException(IllegalArgumentException ex, WebRequest request) {
         logger.error("request {} failed execution with the following exception", request, ex);
         return handleExceptionInternal(ex, new ApiError(ex.getMessage()), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
+    @ExceptionHandler(Exception.class)
     protected ResponseEntity<Object> handleApiException(Exception ex, WebRequest request) {
         logger.error("request {} failed execution with the following exception", request, ex);
         return handleExceptionInternal(ex, new ApiError("Something went wrong on server side"), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(RegisterEmployeeException.class)
+    @ExceptionHandler(RegisterEmployeeException.class)
     protected ResponseEntity<Object> handleApiException(RegisterEmployeeException validationException, WebRequest request) {
+        logger.error("Validation failed with next message: {}, request: {}, exception: {}", validationException.getMessage(), request, validationException);
+        return ResponseEntity.badRequest().body(new ApiError(validationException.getMessage()));
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    protected ResponseEntity<Object> handleApiException(AccessDeniedException validationException, WebRequest request) {
         logger.error("Validation failed with next message: {}, request: {}, exception: {}", validationException.getMessage(), request, validationException);
         return ResponseEntity.badRequest().body(new ApiError(validationException.getMessage()));
     }
