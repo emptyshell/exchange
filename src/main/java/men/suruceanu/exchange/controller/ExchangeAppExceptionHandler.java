@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.nio.file.AccessDeniedException;
 import java.util.NoSuchElementException;
 
 @ControllerAdvice
@@ -51,7 +51,7 @@ public class ExchangeAppExceptionHandler extends ResponseEntityExceptionHandler 
     @ExceptionHandler(AccessDeniedException.class)
     protected ResponseEntity<Object> handleApiException(AccessDeniedException validationException, WebRequest request) {
         logger.error("Validation failed with next message: {}, request: {}, exception: {}", validationException.getMessage(), request, validationException);
-        return ResponseEntity.badRequest().body(new ApiError(validationException.getMessage()));
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiError(validationException.getMessage()));
     }
 
     @Override

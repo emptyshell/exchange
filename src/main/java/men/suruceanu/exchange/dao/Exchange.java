@@ -6,10 +6,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "branch")
+@Table(name = "exchange")
 @Getter
 @Setter
 @ToString
@@ -19,23 +20,33 @@ public class Exchange {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exchange_id")
+    @NotNull
     private Long exchangeId;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "currency", referencedColumnName = "cur_id")
+    @OneToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "cur_id", referencedColumnName = "cur_id")
+    @NotNull
     private Currency currency;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "branchId", referencedColumnName = "br_id")
+    @OneToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "br_id", referencedColumnName = "br_id")
+    @NotNull
     private Branch branchId;
 
     @Column(name = "buy_price")
+    @NotNull
     private double buyPrice;
 
     @Column(name = "sell_price")
+    @NotNull
     private double sellPrice;
 
+    @Column(name = "rate")
+    @NotNull
+    private long rate;
+
     @Column(name = "timestamp")
+    @NotNull
     private LocalDateTime timestamp;
 
 }

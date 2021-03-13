@@ -10,6 +10,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,6 +27,7 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "emp_id")
+    @NotNull
     private Long employeeId;
 
     @OneToMany(mappedBy = "branchId", cascade = CascadeType.REFRESH, targetEntity = Branch.class)
@@ -43,11 +45,14 @@ public class Employee implements Serializable {
     @Enumerated(EnumType.STRING)
     @Type(type = "pgsql_enum")
     @Column(name = "emp_access_level")
+    @NotNull
     private AccessLevel employeeAccessLevel;
 
     @Column(name = "emp_login")
+    @NotNull
     private String employeeLogin;
 
     @Column(name = "emp_password")
+    @NotNull
     private String employeePassword;
 }

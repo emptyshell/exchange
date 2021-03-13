@@ -1,8 +1,8 @@
 create table currency
 (
     full_name varchar(50) not null,
-    name varchar(10) not null,
-    cur_id bigserial not null
+    name      varchar(10) not null,
+    cur_id    bigserial   not null
         constraint cur_id_pk
             primary key
 );
@@ -32,15 +32,16 @@ create table exchange
     exchange_id bigserial not null
         constraint exchange_cur_id_pk
             primary key,
-    currency    bigint    not null
-        constraint exchange_currency_fk
-            references currency (cur_id),
+    cur_id      bigint    not null
+        constraint exchange_cur_id_fk
+            references currency,
     br_id       bigint    not null
         constraint exchange_br_id_br_id_fk
-            references branch (br_id),
+            references branch,
     buy_price   real      not null,
     sell_price  real      not null,
-    timestamp   timestamp not null
+    timestamp   timestamp not null,
+    rate        bigint    not null
 );
 
 create table account
