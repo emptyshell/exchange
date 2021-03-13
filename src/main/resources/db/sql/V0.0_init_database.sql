@@ -29,20 +29,27 @@ create table branch
 
 create table exchange
 (
-    exchange_id bigserial not null
+    exchange_id bigserial                 not null
         constraint exchange_cur_id_pk
             primary key,
-    cur_id      bigint    not null
+    cur_id      bigint                    not null
         constraint exchange_cur_id_fk
             references currency,
-    br_id       bigint    not null
+    br_id       bigint                    not null
         constraint exchange_br_id_br_id_fk
             references branch,
-    buy_price   real      not null,
-    sell_price  real      not null,
-    timestamp   timestamp not null,
-    rate        bigint    not null
+    buy_price   real                      not null,
+    sell_price  real                      not null,
+    timestamp   timestamp                 not null,
+    rate        bigint                    not null,
+    date        date default CURRENT_DATE not null
 );
+
+alter table exchange
+    owner to postgres;
+
+create unique index exchange_date_uindex
+    on exchange (date);
 
 create table account
 (
@@ -82,17 +89,16 @@ create table exchange_history
     ex_history_id bigserial not null
         constraint exchange_history_ac_id_pk
             primary key,
-    buy_amount    real      not null,
-    sell_amount   real      not null,
+    amount        real      not null,
     exchange_id   bigint    not null
         constraint exchange_history_exchange_id_fk
-            references exchange (exchange_id),
+            references exchange,
     br_id         bigint    not null
         constraint exchange_history_br_id_br_id_fk
-            references branch (br_id),
+            references branch,
     emp_id        bigint    not null
         constraint exchange_history_emp_id_fk
-            references employee (emp_id),
-    timestamp     timestamp not null
-
-)
+            references employee,
+    timestamp     timestamp not null,
+    date          date      not null
+);

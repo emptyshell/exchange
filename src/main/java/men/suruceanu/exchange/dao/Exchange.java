@@ -8,6 +8,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "exchange")
@@ -44,6 +45,11 @@ public class Exchange {
     @Column(name = "rate")
     @NotNull
     private long rate;
+
+    @Column(name = "date")
+    @Temporal(TemporalType.DATE)
+    @NotNull
+    private Date date;
 
     @Column(name = "timestamp")
     @NotNull
