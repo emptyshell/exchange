@@ -1,7 +1,6 @@
-package men.suruceanu.exchange.dto.exception;
+package men.suruceanu.exchange.exception;
 
-
-public class EmployeeNotFoundException extends Exception{
+public class EmployeeNotFoundException extends NotFoundException {
 
     public EmployeeNotFoundException() {
     }

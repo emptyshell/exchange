@@ -2,9 +2,9 @@ package men.suruceanu.exchange.service;
 
 import men.suruceanu.exchange.dao.Account;
 import men.suruceanu.exchange.dto.SchimbValutarEditare;
-import men.suruceanu.exchange.dto.exception.AccountNotFoundException;
-import men.suruceanu.exchange.dto.exception.CurrencyNotFoundException;
-import men.suruceanu.exchange.dto.exception.ExchangeHistoryNotFoundException;
+import men.suruceanu.exchange.exception.AccountNotFoundException;
+import men.suruceanu.exchange.exception.CurrencyNotFoundException;
+import men.suruceanu.exchange.exception.ExchangeHistoryNotFoundException;
 import men.suruceanu.exchange.repositories.AccountRepository;
 import men.suruceanu.exchange.repositories.CurrencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;

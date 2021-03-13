@@ -1,7 +1,7 @@
 package men.suruceanu.exchange.controller;
 
 import men.suruceanu.exchange.dao.Currency;
-import men.suruceanu.exchange.dto.exception.CurrencyNotFoundException;
+import men.suruceanu.exchange.exception.CurrencyNotFoundException;
 import men.suruceanu.exchange.service.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

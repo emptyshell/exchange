@@ -1,7 +1,7 @@
 package men.suruceanu.exchange.controller;
 
 import men.suruceanu.exchange.dao.Exchange;
-import men.suruceanu.exchange.dto.exception.ExchangeNotFoundException;
+import men.suruceanu.exchange.exception.ExchangeNotFoundException;
 import men.suruceanu.exchange.service.ExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

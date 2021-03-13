@@ -2,7 +2,7 @@ package men.suruceanu.exchange.service;
 
 
 import men.suruceanu.exchange.dao.Currency;
-import men.suruceanu.exchange.dto.exception.CurrencyNotFoundException;
+import men.suruceanu.exchange.exception.CurrencyNotFoundException;
 import men.suruceanu.exchange.repositories.CurrencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

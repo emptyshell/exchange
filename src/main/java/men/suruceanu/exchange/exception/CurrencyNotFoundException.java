@@ -1,7 +1,6 @@
-package men.suruceanu.exchange.dto.exception;
+package men.suruceanu.exchange.exception;
 
-
-public class CurrencyNotFoundException extends Exception{
+public class CurrencyNotFoundException extends NotFoundException {
 
     public CurrencyNotFoundException() {
     }

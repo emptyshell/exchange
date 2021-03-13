@@ -3,7 +3,7 @@ package men.suruceanu.exchange.controller;
 import men.suruceanu.exchange.component.JwtUtils;
 import men.suruceanu.exchange.dao.Employee;
 import men.suruceanu.exchange.dto.LoginRequest;
-import men.suruceanu.exchange.dto.exception.RegisterEmployeeException;
+import men.suruceanu.exchange.exception.RegisterEmployeeException;
 import men.suruceanu.exchange.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

@@ -1,7 +1,7 @@
 package men.suruceanu.exchange.controller;
 
 import men.suruceanu.exchange.dao.Branch;
-import men.suruceanu.exchange.dto.exception.BranchNotFoundException;
+import men.suruceanu.exchange.exception.BranchNotFoundException;
 import men.suruceanu.exchange.service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

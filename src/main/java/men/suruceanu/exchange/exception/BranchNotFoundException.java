@@ -1,7 +1,6 @@
-package men.suruceanu.exchange.dto.exception;
+package men.suruceanu.exchange.exception;
 
-
-public class BranchNotFoundException extends Exception{
+public class BranchNotFoundException extends NotFoundException {
 
     public BranchNotFoundException() {
     }

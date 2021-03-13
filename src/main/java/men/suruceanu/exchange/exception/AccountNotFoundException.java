@@ -1,7 +1,7 @@
-package men.suruceanu.exchange.dto.exception;
+package men.suruceanu.exchange.exception;
 
 
-public class AccountNotFoundException extends Exception{
+public class AccountNotFoundException extends NotFoundException{
 
     public AccountNotFoundException() {
     }

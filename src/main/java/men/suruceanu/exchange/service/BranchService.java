@@ -1,7 +1,7 @@
 package men.suruceanu.exchange.service;
 
 import men.suruceanu.exchange.dao.Branch;
-import men.suruceanu.exchange.dto.exception.BranchNotFoundException;
+import men.suruceanu.exchange.exception.BranchNotFoundException;
 import men.suruceanu.exchange.repositories.BranchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

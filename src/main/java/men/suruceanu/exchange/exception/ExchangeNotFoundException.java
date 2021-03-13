@@ -1,7 +1,6 @@
-package men.suruceanu.exchange.dto.exception;
+package men.suruceanu.exchange.exception;
 
-
-public class ExchangeNotFoundException extends Exception{
+public class ExchangeNotFoundException extends NotFoundException{
 
     public ExchangeNotFoundException() {
     }

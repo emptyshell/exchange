@@ -1,7 +1,6 @@
-package men.suruceanu.exchange.dto.exception;
+package men.suruceanu.exchange.exception;
 
-
-public class ExchangeHistoryNotFoundException extends Exception{
+public class ExchangeHistoryNotFoundException extends NotFoundException {
 
     public ExchangeHistoryNotFoundException() {
     }

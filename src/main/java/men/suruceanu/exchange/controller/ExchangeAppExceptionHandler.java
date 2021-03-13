@@ -1,7 +1,8 @@
 package men.suruceanu.exchange.controller;
 
 import men.suruceanu.exchange.dto.ApiError;
-import men.suruceanu.exchange.dto.exception.RegisterEmployeeException;
+import men.suruceanu.exchange.exception.NotFoundException;
+import men.suruceanu.exchange.exception.RegisterEmployeeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -52,6 +53,12 @@ public class ExchangeAppExceptionHandler extends ResponseEntityExceptionHandler 
     protected ResponseEntity<Object> handleApiException(AccessDeniedException validationException, WebRequest request) {
         logger.error("Validation failed with next message: {}, request: {}, exception: {}", validationException.getMessage(), request, validationException);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiError(validationException.getMessage()));
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    protected ResponseEntity<Object> handleApiException(NotFoundException notFoundException, WebRequest request) {
+        logger.error("Validation failed with next message: {}, request: {}, exception: {}", notFoundException.getMessage(), request, notFoundException);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiError(notFoundException.getMessage()));
     }
 
     @Override
